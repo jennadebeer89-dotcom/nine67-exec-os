@@ -12,27 +12,53 @@ interface ChatMessage {
   content: string;
 }
 
+/** Parse defensively — a malformed request must never 500, only degrade gracefully. */
+function parseMessages(body: unknown): ChatMessage[] {
+  const raw = (body as { messages?: unknown })?.messages;
+  if (!Array.isArray(raw)) return [];
+  return raw
+    .filter(
+      (m): m is ChatMessage =>
+        !!m &&
+        typeof (m as ChatMessage).content === "string" &&
+        ((m as ChatMessage).role === "user" || (m as ChatMessage).role === "assistant"),
+    )
+    .map((m) => ({ role: m.role, content: m.content.slice(0, 4000) }));
+}
+
 export async function POST(req: Request) {
-  const { messages } = (await req.json()) as { messages: ChatMessage[] };
+  const encoder = new TextEncoder();
+  const streamText = (text: string, mode: "live" | "fallback") =>
+    new Response(
+      new ReadableStream({
+        start(controller) {
+          controller.enqueue(encoder.encode(text));
+          controller.close();
+        },
+      }),
+      { headers: { "Content-Type": "text/plain; charset=utf-8", "X-AI-Mode": mode } },
+    );
+
+  let messages: ChatMessage[] = [];
+  try {
+    messages = parseMessages(await req.json());
+  } catch {
+    // invalid / empty JSON body
+  }
+
   const lastUser = [...messages].reverse().find((m) => m.role === "user")?.content ?? "";
+  if (!lastUser.trim()) {
+    return streamText(
+      "Ask me about clients at risk, revenue at risk, over-budget projects, team capacity, what changed this week, or why a specific project is flagged.",
+      "fallback",
+    );
+  }
+
   const state = await getExecState();
   const openai = getOpenAI();
 
-  const encoder = new TextEncoder();
-
   // Fallback: deterministic, grounded answer streamed in one go.
-  if (!openai) {
-    const answer = fallbackAnswer(lastUser, state);
-    const stream = new ReadableStream({
-      start(controller) {
-        controller.enqueue(encoder.encode(answer));
-        controller.close();
-      },
-    });
-    return new Response(stream, {
-      headers: { "Content-Type": "text/plain; charset=utf-8", "X-AI-Mode": "fallback" },
-    });
-  }
+  if (!openai) return streamText(fallbackAnswer(lastUser, state), "fallback");
 
   // Live: stream the model grounded in the snapshot.
   const context = buildContext(state);
