@@ -13,14 +13,21 @@ export default async function DigestPage() {
   const digest = await getWeeklyDigest(state);
   const c = state.alertCounts;
 
-  // Derive the weekday from the snapshot date — never hardcode it.
-  const date = new Date(state.briefing.asOf + "T00:00:00Z").toLocaleDateString("en-US", {
-    weekday: "long",
-    month: "long",
-    day: "numeric",
-    year: "numeric",
-    timeZone: "UTC",
-  });
+  // The briefing is sent every Monday. Compute the actual send date (the next
+  // Monday on/after the data snapshot) rather than hardcoding any weekday.
+  const snapshot = new Date(state.briefing.asOf + "T00:00:00Z");
+  const fmt = (d: Date, withWeekday = false) =>
+    d.toLocaleDateString("en-US", {
+      ...(withWeekday ? { weekday: "long" as const } : {}),
+      month: "long",
+      day: "numeric",
+      year: "numeric",
+      timeZone: "UTC",
+    });
+  const sendDate = new Date(snapshot);
+  sendDate.setUTCDate(sendDate.getUTCDate() + ((1 - snapshot.getUTCDay() + 7) % 7)); // next Monday (0 if already Mon)
+  const mondayDate = fmt(sendDate); // e.g. "June 8, 2026"
+  const snapshotDate = fmt(snapshot, true); // e.g. "Friday, June 5, 2026"
 
   return (
     <div className="mx-auto max-w-3xl px-5 py-8">
@@ -33,7 +40,7 @@ export default async function DigestPage() {
         <div>
           <h1 className="font-display text-3xl font-medium tracking-tight text-foreground">Weekly briefing email</h1>
           <p className="mt-1 text-muted-foreground">
-            The recurring executive briefing, generated from the current data snapshot. This is a live preview.
+            Auto-generated and sent to leadership every Monday morning. This is a live preview.
           </p>
         </div>
         <AIBadge mode={digest.mode} />
@@ -53,10 +60,11 @@ export default async function DigestPage() {
             </div>
           </div>
           <h2 className="mt-3 font-display text-xl font-semibold text-foreground">
-            Weekly Briefing — {date}
+            Monday Briefing — {mondayDate}
           </h2>
-          <p className="mt-1 flex items-center gap-1.5 text-xs text-muted-foreground">
-            <Clock className="h-3 w-3" /> Generated 7:00am · {c.critical} critical / {c.warning} warning alerts
+          <p className="mt-1 flex flex-wrap items-center gap-x-1.5 gap-y-0.5 text-xs text-muted-foreground">
+            <Clock className="h-3 w-3" /> Sent Monday 7:00am · compiled from data as of {snapshotDate} ·{" "}
+            {c.critical} critical / {c.warning} warning alerts
           </p>
         </div>
 
