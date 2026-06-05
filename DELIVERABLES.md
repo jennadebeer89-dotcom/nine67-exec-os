@@ -40,14 +40,26 @@ An executive won't act on "the AI says this client is at risk." They'll act on *
 risk because the portal is 12% over budget, the renewal is 56 days out, the champion left in April,
 and procurement is benchmarking two competitors — here's the actual note."*
 
-So the system is split in two:
+So the system is split into **three layers**, and the boundary between them is the whole design:
 
 - **A deterministic engine** computes every number — risk scores, capacity utilization, revenue-at-risk,
-  data-quality flags. It's pure TypeScript, unit-inspectable (`pnpm engine:check`), and identical every
-  run. Each risk score is the sum of weighted **factors**, and each factor carries its own **evidence**
-  (the metric, the budget source, or the literal status note behind it).
-- **The AI layer** only ever writes *language* on top of that — the summary, the "why," the action, the
-  chat. It's fed the engine's output as grounding context and is instructed never to invent figures.
+  data-quality flags. Pure TypeScript, inspectable (`pnpm engine:check`), identical every run. Each risk
+  score is a sum of weighted **factors**, and each factor carries its own **evidence** (the metric, the
+  budget source, or the literal status note behind it). Numbers are never left to a model.
+- **An AI judgment layer** does the thing a dashboard fundamentally cannot: it *reads the unstructured
+  field notes* — calls, standups, status emails — and reasons about what the numbers **don't** show.
+  Relationship and political risk (a champion left, procurement is shopping), contradictions between
+  reported status and what people are actually saying, team morale, hidden dependencies. This is the
+  **"AI Insights — what the numbers don't show"** panel and the per-item **field read**. It's explicitly
+  advisory and labelled as such, sitting *alongside* the hard numbers, not replacing them.
+- **An AI generation layer** turns a recommendation into a usable artifact — the executive summary, the
+  plain-English "why," and **drafted outreach** (the actual email to a client sponsor or Slack message to
+  a delivery team, ready to send).
+
+That's the AI-native methodology in one line: **deterministic facts → AI judgment over the human signal →
+AI-generated action.** The AI does reasoning and creation, not just captioning — but never the arithmetic,
+so it stays trustworthy. Everything is grounded in the snapshot; the AI is instructed never to invent
+figures, and the whole product still runs on deterministic fallbacks if the model key is removed.
 
 The result: the AI can be wrong about *tone* but not about *facts*, because the facts come from the
 engine. That's what makes it safe to put in front of leadership.

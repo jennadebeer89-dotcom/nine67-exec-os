@@ -1,9 +1,10 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, Lightbulb, ListChecks, MessageSquareQuote } from "lucide-react";
+import { ArrowLeft, Lightbulb, ListChecks, MessageSquareQuote, ScanSearch } from "lucide-react";
 import { getExecState, type ExecState } from "@/lib/engine";
 import type { AttentionItem } from "@/lib/engine/types";
 import { explainItem } from "@/lib/ai";
+import { getItemInsight, notesForItem } from "@/lib/ai/insights";
 import { relatedNotes } from "@/lib/engine/signals";
 import { fmtMoney } from "@/lib/format";
 import { KIND_LABEL } from "@/lib/ui";
@@ -12,6 +13,7 @@ import { TrendBadge } from "@/components/trend";
 import { MetricRow } from "@/components/metrics";
 import { FactorCard } from "@/components/factor-card";
 import { AIBadge } from "@/components/ai-badge";
+import { DraftOutreach } from "@/components/draft-outreach";
 import {
   BudgetDeliveryBar,
   RevenueExposureBar,
@@ -28,7 +30,11 @@ export default async function ItemPage({ params }: { params: Promise<{ id: strin
   const item = state.briefing.items.find((i) => i.id === id);
   if (!item) notFound();
 
-  const explanation = await explainItem(item, state);
+  const itemNotes = notesForItem(item, state);
+  const [explanation, fieldRead] = await Promise.all([
+    explainItem(item, state),
+    itemNotes.length > 0 ? getItemInsight(item, state) : Promise.resolve(null),
+  ]);
 
   return (
     <div className="mx-auto max-w-4xl px-5 py-8">
@@ -77,10 +83,29 @@ export default async function ItemPage({ params }: { params: Promise<{ id: strin
         </div>
       </section>
 
+      {/* AI field read — what the qualitative notes say that the numbers don't */}
+      {fieldRead && (
+        <section className="mt-4 rounded-2xl border border-primary/20 bg-gradient-to-br from-accent/50 to-card p-5 shadow-sm">
+          <div className="flex items-center gap-2">
+            <ScanSearch className="h-4 w-4 text-primary" />
+            <h2 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">
+              The field read — between the lines
+            </h2>
+            <AIBadge mode={fieldRead.mode} />
+          </div>
+          <p className="mt-3 text-[15px] leading-relaxed text-foreground/90">{fieldRead.read}</p>
+        </section>
+      )}
+
       {/* Metrics */}
       <section className="mt-4 rounded-2xl border border-border bg-card p-5 shadow-sm">
         <MetricRow metrics={item.metrics} />
       </section>
+
+      {/* AI-drafted outreach */}
+      <div className="mt-4">
+        <DraftOutreach itemId={item.id} />
+      </div>
 
       {/* Kind-specific evidence visualization */}
       <EvidenceVisual item={item} state={state} />

@@ -35,9 +35,11 @@ export function buildDataConfidence(ds: Dataset): DataConfidence {
   };
 
   // Penalty-based score: conflicts and missing data hurt most.
-  const penalty = counts.high * 9 + counts.medium * 4 + counts.low * 1.5;
+  // Penalty-based: conflicts hurt most, but a handful of flagged low/medium gaps in
+  // a realistically-messy dataset should read as "moderate, with caveats" — not "low".
+  const penalty = counts.high * 7 + counts.medium * 3 + counts.low * 1;
   const score = Math.max(0, Math.min(100, Math.round(100 - penalty)));
-  const level = score >= 80 ? "high" : score >= 60 ? "moderate" : "low";
+  const level = score >= 80 ? "high" : score >= 58 ? "moderate" : "low";
 
   const groups: ConfidenceGroup[] = ORDER.map((kind) => ({
     kind,

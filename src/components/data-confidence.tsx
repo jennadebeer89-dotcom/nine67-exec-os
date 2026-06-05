@@ -43,7 +43,11 @@ export function DataConfidencePanel({ dc }: { dc: DataConfidence }) {
             <ShieldAlert className="h-4 w-4 text-muted-foreground" />
             <h2 className="font-display text-lg font-medium tracking-tight text-foreground">Data Confidence</h2>
           </div>
-          <p className="mt-2 text-sm leading-relaxed text-foreground/80">{dc.summaryLine}</p>
+          <p className="mt-1 text-xs text-muted-foreground">
+            Rates the trustworthiness of the <em>source data</em> feeding this briefing — not the system. A growing
+            agency&apos;s exports are genuinely this messy; the value is that it&apos;s surfaced, not hidden.
+          </p>
+          <p className="mt-2.5 text-sm leading-relaxed text-foreground/80">{dc.summaryLine}</p>
         </div>
         <div className="w-full shrink-0 sm:w-44">
           <div className="flex items-end justify-between">

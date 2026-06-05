@@ -18,10 +18,12 @@ surfaces every conflict, gap, and stale record rather than hiding it.
 | Capability | Where |
 | --- | --- |
 | **Executive summary** — "state of the business this week" | Homepage hero |
+| **AI Insights** — the AI *reads the unstructured field notes* for relationship/political/morale risk the numbers miss | Homepage "what the numbers don't show" panel + per-item "field read" |
+| **AI-drafted outreach** — generates the actual email/Slack message to act on a risk | Drill-down "Draft outreach" |
 | **Ranked attention items** — what to focus on, in order | Homepage |
 | **Risk explanations + recommended actions** (AI) | Each item card + drill-down |
 | **Evidence trail** — the deterministic factors + the raw notes/budgets behind each risk | `/item/[id]` |
-| **Ask-the-business chat** — grounded Q&A over the whole operation | `/ask` |
+| **Ask-the-business chat** — grounded Q&A over the whole operation, incl. the qualitative signal | `/ask` |
 | **Trend detection** — week-over-week movers (burn accelerating, revenue moving to at-risk, a client going quiet) | Homepage "What changed this week" + trend chips |
 | **Automated alerts** — threshold-triggered notifications across budget/client/capacity/revenue/data/trend | `/alerts` + nav bell + homepage banner |
 | **Weekly briefing email** — the auto-generated executive briefing email to leadership | `/digest` |
@@ -29,16 +31,18 @@ surfaces every conflict, gap, and stale record rather than hiding it.
 | **Capacity pressure** — over-allocated people & resource contention | Capacity attention item |
 | **Data Confidence** — conflicts, missing fields, stale records, orphaned signals | Homepage panel |
 
-### The core idea: deterministic math, AI language
+### The core idea: deterministic facts → AI judgment → AI action
 
 - **A deterministic TypeScript engine** owns every number — risk scores, capacity utilization,
   revenue-at-risk, and data-quality flags. Same inputs → same outputs, every time. Fully explainable.
-- **OpenAI (GPT-4o)** owns the *language* — the executive summary, the plain-English "why this
-  matters," the recommended actions, and the chat. It's always **grounded** in the engine's output,
-  so it explains the business; it never invents it.
+- **An AI judgment layer (GPT-4o)** does what a dashboard can't: it *reads the unstructured field notes*
+  and reasons about what the numbers don't show — relationship risk, contradictions, morale, hidden
+  dependencies. Advisory, labelled, sitting alongside the hard numbers.
+- **An AI generation layer (GPT-4o)** turns findings into artifacts — the summary, the "why," the chat,
+  and **drafted outreach** ready to send. Always grounded in the engine's output; never invents figures.
 
-This split is deliberate: it *feels* intelligent, stays *reliable*, and can be *explained* to a
-skeptical executive.
+This split is deliberate: the AI does the reasoning and the writing, never the arithmetic — so it *feels*
+genuinely intelligent, stays *reliable*, and can be *explained* to a skeptical executive.
 
 ---
 

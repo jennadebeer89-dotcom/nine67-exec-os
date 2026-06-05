@@ -92,5 +92,14 @@ export function buildContext(state: ExecState): string {
     for (const is of g.issues) L.push(`    - [${is.severity}] ${is.entityName}: ${is.title} — ${is.detail}`);
   }
 
+  // The raw qualitative signal — so the AI can reason about relationships, sentiment,
+  // and what people are actually saying, not just the metrics.
+  L.push(`\n## Field notes (raw status updates — the human signal behind the numbers)`);
+  for (const n of ds.notes) {
+    if (n.entityType === "unknown") continue;
+    const where = n.entityType === "team" ? `team:${n.entityId}` : n.entityId;
+    L.push(`  - [${n.date ?? "n/a"}] ${n.author ?? "Unknown"} (${n.channel ?? "note"}) re ${where}: "${n.text}"`);
+  }
+
   return L.join("\n");
 }

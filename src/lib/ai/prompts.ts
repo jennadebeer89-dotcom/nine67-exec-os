@@ -10,6 +10,43 @@ Hard rules:
 - Prioritise ruthlessly. Lead with what matters most. No filler, no hedging clichés.
 - Write for executives: short sentences, plain English, no jargon, no emoji.`;
 
+export const INSIGHTS_PROMPT = `${PERSONA}
+
+Task: This is the highest-value thing you do. The deterministic system already covers the NUMBERS — budgets, completion %, dates, utilization, revenue. Your job is different and harder: read the raw, messy FIELD NOTES (Slack, standups, calls, status emails) and surface what the numbers DON'T show. This is judgment a dashboard cannot produce.
+
+Find:
+- Relationship & political risk (a champion left, a sponsor went quiet, procurement is shopping around).
+- Contradictions — where the reported status disagrees with what people are actually saying, or an old rosy note contradicts a recent worried one.
+- Team morale and key-person risk (single points of failure, context-switching, burnout signals).
+- Hidden dependencies and second-order risk (a slip on X quietly endangers Y).
+- Sentiment shifts and "fine on the numbers, risky on the signal" situations.
+
+Hard rules:
+- An insight that the metrics already make obvious is NOT useful. Only surface what's between the lines.
+- Cite the specific field note(s) you're drawing from in "signal".
+- Use the exact entity ids from the ROSTER for entityId (a client c.., a project p.., or null for portfolio-wide/team).
+- Be specific: name the clients, projects, and people.
+- 4–6 insights max, most important first. No filler.
+
+Return JSON exactly: {"insights": [{"entityName": "...", "entityId": "c01|p05|null", "kind": "project|client|team|portfolio", "type": "relationship|trust|morale|hidden-risk|contradiction|opportunity", "headline": "short, sharp", "insight": "2–3 sentences of judgment", "signal": "the field note(s) behind it", "severity": "high|medium|low"}]}
+No other text.`;
+
+export const ITEM_INSIGHT_PROMPT = `${PERSONA}
+
+Task: Give leadership the "field read" on ONE item — what the qualitative notes say that the numbers don't. 2–3 sentences. Focus on relationship, sentiment, morale, contradiction, or hidden risk. Cite what's in the notes. If the notes are reassuring, say so plainly. No headings, no preamble — just the read.`;
+
+export const DRAFT_PROMPT = `${PERSONA}
+
+Task: Draft the actual outreach an executive would send to act on this risk — a real, ready-to-send message, not advice. Decide the right channel and recipient from the context (e.g. an email to a client sponsor, or a Slack message to a delivery team).
+
+Rules:
+- Specific and grounded in the situation; reference the real issue without dumping internal numbers a client shouldn't see.
+- The right tone for the audience: warm and confident to a client, direct and practical to an internal team.
+- Tight — an executive's time is short. No corporate filler.
+
+Return JSON exactly: {"channel": "Email|Slack", "to": "who", "subject": "subject line (empty string for Slack)", "body": "the message"}
+No other text.`;
+
 export const SUMMARY_PROMPT = `${PERSONA}
 
 Task: Write this week's executive summary — the first thing leadership reads when they open the system.

@@ -1,5 +1,6 @@
 import { getExecState } from "@/lib/engine";
 import { getExecutiveSummary } from "@/lib/ai";
+import { getPortfolioInsights } from "@/lib/ai/insights";
 import { ExecSummary } from "@/components/exec-summary";
 import { AskBar } from "@/components/ask-bar";
 import { StatsRow } from "@/components/stats-row";
@@ -7,12 +8,13 @@ import { BriefingItemCard, CompactBriefingRow } from "@/components/briefing-item
 import { DataConfidencePanel } from "@/components/data-confidence";
 import { WhatChangedPanel } from "@/components/trend";
 import { AlertsBanner } from "@/components/alerts";
+import { AIInsightsPanel } from "@/components/ai-insights";
 
 export const dynamic = "force-dynamic";
 
 export default async function BriefingPage() {
   const state = await getExecState();
-  const summary = await getExecutiveSummary(state);
+  const [summary, insights] = await Promise.all([getExecutiveSummary(state), getPortfolioInsights(state)]);
 
   const items = state.briefing.items;
   const primary = items.filter((i) => i.score >= 38);
@@ -38,6 +40,11 @@ export default async function BriefingPage() {
 
       <div className="mt-5">
         <WhatChangedPanel trends={state.trends} />
+      </div>
+
+      {/* AI Insights — the AI reading the unstructured signal the numbers miss */}
+      <div className="mt-5">
+        <AIInsightsPanel insights={insights.insights} mode={insights.mode} />
       </div>
 
       {/* Primary attention list — top item emphasized */}
