@@ -1,8 +1,7 @@
-import Link from "next/link";
-import { MessageSquare, ArrowRight } from "lucide-react";
 import { getExecState } from "@/lib/engine";
 import { getExecutiveSummary } from "@/lib/ai";
 import { ExecSummary } from "@/components/exec-summary";
+import { AskBar } from "@/components/ask-bar";
 import { StatsRow } from "@/components/stats-row";
 import { BriefingItemCard, CompactBriefingRow } from "@/components/briefing-item";
 import { DataConfidencePanel } from "@/components/data-confidence";
@@ -10,12 +9,6 @@ import { WhatChangedPanel } from "@/components/trend";
 import { AlertsBanner } from "@/components/alerts";
 
 export const dynamic = "force-dynamic";
-
-const STARTERS = [
-  "What should I focus on this week?",
-  "Which clients are most at risk?",
-  "What revenue is at risk this quarter?",
-];
 
 export default async function BriefingPage() {
   const state = await getExecState();
@@ -30,8 +23,13 @@ export default async function BriefingPage() {
     <div className="mx-auto max-w-6xl px-5 py-8 sm:py-10">
       <ExecSummary text={summary.text} mode={summary.mode} asOf={state.briefing.asOf} />
 
+      {/* Ask the business — prominent, directly under the summary */}
       <div className="mt-5">
-        <StatsRow stats={state.briefing.stats} />
+        <AskBar />
+      </div>
+
+      <div className="mt-5">
+        <StatsRow stats={state.briefing.stats} revenue={state.briefing.revenue} />
       </div>
 
       <div className="mt-5">
@@ -42,34 +40,7 @@ export default async function BriefingPage() {
         <WhatChangedPanel trends={state.trends} />
       </div>
 
-      {/* Ask the business teaser */}
-      <Link
-        href="/ask"
-        className="group mt-5 flex flex-col gap-3 rounded-xl border border-primary/20 bg-accent/60 p-4 transition-colors hover:bg-accent sm:flex-row sm:items-center sm:justify-between"
-      >
-        <div className="flex items-center gap-3">
-          <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-            <MessageSquare className="h-4 w-4" />
-          </span>
-          <div>
-            <p className="text-sm font-medium text-foreground">Ask the business anything</p>
-            <p className="text-xs text-muted-foreground">Grounded in live data — try one of these</p>
-          </div>
-        </div>
-        <div className="flex flex-wrap gap-1.5">
-          {STARTERS.map((s) => (
-            <span
-              key={s}
-              className="rounded-full border border-border bg-card px-2.5 py-1 text-xs text-muted-foreground"
-            >
-              {s}
-            </span>
-          ))}
-          <ArrowRight className="hidden h-4 w-4 self-center text-primary transition-transform group-hover:translate-x-0.5 sm:block" />
-        </div>
-      </Link>
-
-      {/* Primary attention list */}
+      {/* Primary attention list — top item emphasized */}
       <section className="mt-9">
         <div className="mb-3 flex items-baseline justify-between">
           <h2 className="font-display text-xl font-medium tracking-tight text-foreground">Needs attention now</h2>
@@ -77,7 +48,13 @@ export default async function BriefingPage() {
         </div>
         <div className="space-y-3">
           {primary.map((item, i) => (
-            <BriefingItemCard key={item.id} item={item} rank={i + 1} trend={trendFor(item.kind, item.refId)} />
+            <BriefingItemCard
+              key={item.id}
+              item={item}
+              rank={i + 1}
+              trend={trendFor(item.kind, item.refId)}
+              featured={i === 0}
+            />
           ))}
         </div>
       </section>

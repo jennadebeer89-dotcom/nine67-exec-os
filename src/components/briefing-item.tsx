@@ -1,11 +1,19 @@
 import Link from "next/link";
-import { ArrowRight, AlertTriangle } from "lucide-react";
+import { ArrowRight, AlertTriangle, Flame } from "lucide-react";
 import { cn } from "@/lib/utils";
 import type { AttentionItem, ScoreTrend } from "@/lib/engine/types";
 import { BAND_BG, BAND_SOFT, BAND_TEXT, KIND_LABEL } from "@/lib/ui";
 import { RiskBadge, RiskDot } from "@/components/risk-badge";
 import { MetricRow } from "@/components/metrics";
 import { TrendBadge } from "@/components/trend";
+
+const BAND_RING: Record<string, string> = {
+  high: "ring-risk-high/30",
+  medium: "ring-risk-medium/30",
+  watch: "ring-risk-watch/30",
+  capacity: "ring-risk-capacity/30",
+  low: "ring-risk-low/30",
+};
 
 /** Compact one-line row for lower-priority "also watch" items. */
 export function CompactBriefingRow({ item, trend }: { item: AttentionItem; trend?: ScoreTrend }) {
@@ -31,16 +39,37 @@ export function CompactBriefingRow({ item, trend }: { item: AttentionItem; trend
   );
 }
 
-export function BriefingItemCard({ item, rank, trend }: { item: AttentionItem; rank: number; trend?: ScoreTrend }) {
+export function BriefingItemCard({
+  item,
+  rank,
+  trend,
+  featured = false,
+}: {
+  item: AttentionItem;
+  rank: number;
+  trend?: ScoreTrend;
+  featured?: boolean;
+}) {
   return (
     <Link
       href={`/item/${item.id}`}
-      className="group relative block overflow-hidden rounded-xl border border-border bg-card shadow-sm transition-all hover:border-primary/30 hover:shadow-md"
+      className={cn(
+        "group relative block overflow-hidden rounded-xl border shadow-sm transition-all hover:shadow-md",
+        featured
+          ? cn("border-transparent ring-1", BAND_SOFT[item.band], BAND_RING[item.band], "hover:shadow-lg")
+          : "border-border bg-card hover:border-primary/30",
+      )}
     >
-      {/* Band accent bar */}
-      <span className={cn("absolute inset-y-0 left-0 w-1", BAND_BG[item.band])} />
+      {/* Band accent bar (wider when featured) */}
+      <span className={cn("absolute inset-y-0 left-0", featured ? "w-1.5" : "w-1", BAND_BG[item.band])} />
 
-      <div className="p-5 pl-6">
+      <div className={cn("p-5 pl-6", featured && "pt-4")}>
+        {featured && (
+          <div className={cn("mb-2 inline-flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-wide", BAND_TEXT[item.band])}>
+            <Flame className="h-3 w-3" />
+            Top priority this week
+          </div>
+        )}
         <div className="flex items-start justify-between gap-4">
           <div className="flex min-w-0 items-start gap-3">
             <span className="tnum mt-0.5 text-sm font-semibold text-muted-foreground">
@@ -48,7 +77,7 @@ export function BriefingItemCard({ item, rank, trend }: { item: AttentionItem; r
             </span>
             <div className="min-w-0">
               <div className="flex flex-wrap items-center gap-2">
-                <h3 className="font-display text-lg font-medium leading-tight tracking-tight text-foreground">
+                <h3 className={cn("font-display font-medium leading-tight tracking-tight text-foreground", featured ? "text-xl" : "text-lg")}>
                   {item.title}
                 </h3>
                 <span className="rounded border border-border bg-muted px-1.5 py-0.5 text-[10px] font-medium uppercase tracking-wide text-muted-foreground">
@@ -74,7 +103,7 @@ export function BriefingItemCard({ item, rank, trend }: { item: AttentionItem; r
               key={i}
               className={cn(
                 "inline-flex items-center rounded-md px-2 py-1 text-xs font-medium",
-                BAND_SOFT[item.band],
+                featured ? "border border-border bg-card" : BAND_SOFT[item.band],
                 BAND_TEXT[item.band],
               )}
             >
