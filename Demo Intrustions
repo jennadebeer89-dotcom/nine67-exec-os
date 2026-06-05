@@ -1,0 +1,26 @@
+The situation: We’re a growing agency running multiple client projects at once, with work spread across different teams, clients, timelines, budgets, and systems. Leadership needs a clearer view of how the business is performing without having to dig through spreadsheets, project tools, status updates, and one-off conversations.
+Your task: Using Claude Code, build a small AI-powered executive operations dashboard that helps leadership quickly understand what needs attention across the business.
+The dashboard should help answer questions like:
+What projects need attention right now?
+Which clients may be at risk?
+Where are we over capacity or stretched too thin?
+What revenue or delivery commitments may be at risk this quarter?
+What should leadership focus on this week?
+Please create your own realistic sample data. Don’t make it too clean — assume it came from a mix of project exports, client status notes, budget trackers, and team updates. Some inconsistencies, missing information, unclear statuses, or conflicting signals are expected. How you handle that mess is part of the exercise.
+The main thing we want to see: build this as if you were presenting it to a leadership team or client. It should be something we can click through and understand without a long explanation.
+We’d especially like to see where AI makes this smarter than a dashboard, for example:
+Executive summaries
+Ask-the-business chat
+Automated alerts
+Trend detection
+Client or project risk explanations
+Recommended next actions
+“What should I pay attention to this week?” style insights
+Think beyond charts and tables. If this were being built for a real agency, what would make it genuinely useful to an executive team trying to run the business better?
+What to send back:
+The tool, with instructions to run it
+A link to a working click-through version of the application so we can explore how it works ourselves
+A few notes on your assumptions, what gave you pause, and what you’d build next with more time
+Use Claude Code the way you actually would. We’d rather see how well you leverage the tool than see everything written by hand. There’s no single right answer here.
+We’re less interested in perfect code and more interested in your thinking, product instincts, ability to work with AI-assisted development, and how you approach solving a real business problem.
+Let me know if you have any questions. Looking forward to seeing what you build.
