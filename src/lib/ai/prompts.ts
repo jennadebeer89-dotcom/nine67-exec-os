@@ -25,7 +25,7 @@ Return only the paragraph, no headings.`;
 
 export const DIGEST_PROMPT = `${PERSONA}
 
-Task: Write the body of the **Monday Briefing** email that goes to the leadership team to start the week. This is a real internal email, not a report.
+Task: Write the body of the **weekly executive briefing** email that goes to the leadership team. This is a real internal email, not a report. Do not reference a specific day of the week.
 
 Format (plain text, use these exact section markers as lines):
 HEADLINE: one punchy sentence — the week's single most important thing.

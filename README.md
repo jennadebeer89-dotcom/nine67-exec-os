@@ -24,7 +24,7 @@ surfaces every conflict, gap, and stale record rather than hiding it.
 | **Ask-the-business chat** — grounded Q&A over the whole operation | `/ask` |
 | **Trend detection** — week-over-week movers (burn accelerating, revenue moving to at-risk, a client going quiet) | Homepage "What changed this week" + trend chips |
 | **Automated alerts** — threshold-triggered notifications across budget/client/capacity/revenue/data/trend | `/alerts` + nav bell + homepage banner |
-| **Weekly briefing email** — the auto-generated Monday email to leadership | `/digest` |
+| **Weekly briefing email** — the auto-generated executive briefing email to leadership | `/digest` |
 | **Revenue at risk** this quarter, with per-line reasons | Revenue attention item |
 | **Capacity pressure** — over-allocated people & resource contention | Capacity attention item |
 | **Data Confidence** — conflicts, missing fields, stale records, orphaned signals | Homepage panel |
@@ -101,7 +101,7 @@ src/
     item/[id]/page.tsx Drill-down evidence trail
     ask/page.tsx       Ask-the-business chat
     alerts/page.tsx    Threshold-triggered alerts
-    digest/page.tsx    Weekly Monday-briefing email preview
+    digest/page.tsx    Weekly executive briefing email preview
     api/chat/route.ts  Streaming, grounded chat endpoint
 supabase/schema.sql    Mess-tolerant table definitions
 scripts/seed.ts        Idempotent Supabase seed

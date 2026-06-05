@@ -27,7 +27,7 @@ export async function TopNav() {
           <Link
             href="/digest"
             className="hidden items-center gap-1.5 rounded-md px-3 py-1.5 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground sm:inline-flex"
-            title="Weekly Monday briefing email"
+            title="Weekly briefing email"
           >
             <Mail className="h-3.5 w-3.5" />
             Weekly email

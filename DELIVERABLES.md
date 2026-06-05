@@ -123,7 +123,7 @@ were built out after the initial version:
 - **Automated alerts** (`src/lib/engine/alerts.ts`). Threshold rules across budget, client, capacity,
   revenue, data quality, and week-over-week movement. Each alert names the rule that fired and deep-links
   to the underlying item. Surfaced on `/alerts`, a nav bell with a count, and a homepage banner.
-- **Weekly briefing email** (`/digest`). The auto-generated Monday email to leadership — AI headline,
+- **Weekly briefing email** (`/digest`). The auto-generated executive briefing email to leadership — AI headline,
   the week in a paragraph, top 3 actions with owners, and a "watch" line on data trust. A real artifact,
   not a mockup; generated on demand from the same engine + AI layer.
 
@@ -162,7 +162,7 @@ where margin and clients are lost.
    for CRM, Jira/Asana for delivery, Xero/QuickBooks for finance) feeding the same normalize layer.
 2. **Persisted snapshot history.** Trends currently compare against a reconstructed prior week; storing a
    real time series in Supabase unlocks multi-week sparklines and sentiment trajectories.
-3. **Delivery channels for alerts** — actually push the Monday email and threshold alerts to email/Slack
+3. **Delivery channels for alerts** — actually push the weekly briefing email and threshold alerts to email/Slack
    on a schedule (the content generation is already built).
 4. **Configurable thresholds & per-client risk policies**, owned by leadership in-app.
 5. **Actions that close the loop.** "Schedule the retention call," "open a change-order task," "flag the

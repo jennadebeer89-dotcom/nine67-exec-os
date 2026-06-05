@@ -118,7 +118,7 @@ function fallbackExplain(item: AttentionItem): { why: string; action: string } {
 }
 
 // ---------------------------------------------------------------------------
-// Weekly Monday-briefing email digest
+// Weekly briefing email digest
 // ---------------------------------------------------------------------------
 
 export interface WeeklyDigest {
@@ -148,7 +148,7 @@ export async function getWeeklyDigest(state: ExecState): Promise<WeeklyDigest> {
       temperature: 0.4,
       messages: [
         { role: "system", content: DIGEST_PROMPT },
-        { role: "user", content: `SNAPSHOT:\n${buildContext(state)}\n\nWrite the Monday Briefing email body.` },
+        { role: "user", content: `SNAPSHOT:\n${buildContext(state)}\n\nWrite the weekly briefing email body.` },
       ],
     });
     const parsed = parseDigest(res.choices[0]?.message?.content || "");
