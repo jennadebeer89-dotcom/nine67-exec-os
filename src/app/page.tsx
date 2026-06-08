@@ -20,6 +20,8 @@ export default async function BriefingPage() {
   const primary = items.filter((i) => i.score >= 38);
   const secondary = items.filter((i) => i.score < 38);
   const trendFor = (kind: string, refId: string) => state.trends.scoreByKey[`${kind}:${refId}`];
+  const criticalIds = state.alerts.filter((a) => a.severity === "critical").map((a) => a.id);
+  const warningIds = state.alerts.filter((a) => a.severity === "warning").map((a) => a.id);
 
   return (
     <div className="mx-auto max-w-6xl px-5 py-8 sm:py-10">
@@ -35,7 +37,7 @@ export default async function BriefingPage() {
       </div>
 
       <div className="reveal mt-5" style={{ animationDelay: "180ms" }}>
-        <AlertsBanner counts={state.alertCounts} />
+        <AlertsBanner criticalIds={criticalIds} warningIds={warningIds} />
       </div>
 
       <div className="reveal mt-5" style={{ animationDelay: "240ms" }}>

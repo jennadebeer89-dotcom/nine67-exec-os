@@ -24,7 +24,7 @@ export function ExecSummary({ text, mode, asOf }: { text: string; mode: AIMode; 
       <h1 className="mt-3 font-display text-sm font-medium italic leading-snug text-muted-foreground">
         What leadership should focus on this week
       </h1>
-      <p className="mt-2 max-w-3xl font-display text-xl font-normal leading-relaxed text-foreground sm:text-[1.45rem] sm:leading-relaxed">
+      <p className="mt-2 max-w-3xl font-display text-base font-normal leading-relaxed text-foreground/90 sm:text-[17px]">
         {text}
       </p>
     </section>

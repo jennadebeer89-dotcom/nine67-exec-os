@@ -5,8 +5,10 @@ import { getExecState } from "@/lib/engine";
 import { AlertBell } from "@/components/alerts";
 
 export async function TopNav() {
-  const { alertCounts } = await getExecState();
-  const actionable = alertCounts.critical + alertCounts.warning;
+  const { alerts } = await getExecState();
+  const actionableIds = alerts
+    .filter((a) => a.severity === "critical" || a.severity === "warning")
+    .map((a) => a.id);
 
   return (
     <header className="sticky top-0 z-40 border-b border-border/70 bg-background/80 backdrop-blur-md">
@@ -39,7 +41,7 @@ export async function TopNav() {
           >
             Impact
           </Link>
-          <AlertBell count={actionable} />
+          <AlertBell actionableIds={actionableIds} />
           <Link
             href="/ask"
             className="rounded-md bg-primary px-3 py-1.5 font-medium text-primary-foreground transition-opacity hover:opacity-90"
