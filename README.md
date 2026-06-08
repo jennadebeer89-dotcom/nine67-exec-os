@@ -34,6 +34,7 @@ surfaces every conflict, gap, and stale record rather than hiding it.
 | **Revenue at risk** this quarter, with per-line reasons | Revenue attention item |
 | **Capacity pressure** — over-allocated people & resource contention | Capacity attention item |
 | **Data Confidence** — conflicts, missing fields, stale records, orphaned signals | Homepage panel |
+| **Business case & impact** — the problem, what matters, and how impact is measured (revenue, margin, speed) | `/impact` |
 
 ### The core idea: deterministic facts → AI judgment → AI action
 
@@ -110,7 +111,9 @@ src/
     ask/page.tsx       Ask-the-business chat
     alerts/page.tsx    Threshold-triggered alerts
     digest/page.tsx    Weekly executive briefing email preview
+    impact/page.tsx    Business case & impact — ROI framing, engine-derived
     api/chat/route.ts  Streaming, grounded chat endpoint
+    api/draft/route.ts AI-drafted outreach endpoint
 supabase/schema.sql    Mess-tolerant table definitions
 scripts/seed.ts        Idempotent Supabase seed
 scripts/engine-check.ts  `pnpm engine:check` — prints briefing, trends, and alerts for inspection
