@@ -106,7 +106,7 @@ function CountPill({ label, n, className }: { label: string; n: number; classNam
   return (
     <span className={cn("inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[11px] font-medium", className)}>
       <span className="tnum">{n}</span>
-      <span className="opacity-80">{label}</span>
+      <span>{label}</span>
     </span>
   );
 }

@@ -162,6 +162,7 @@ export function ChatPanel() {
           <button
             type="submit"
             disabled={busy || !input.trim()}
+            aria-label="Send message"
             className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-primary text-primary-foreground transition-opacity hover:opacity-90 disabled:opacity-40"
           >
             <Send className="h-4 w-4" />

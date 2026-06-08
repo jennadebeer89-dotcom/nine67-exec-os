@@ -80,9 +80,9 @@
   --ring: oklch(0.42 0.055 220);
 
   /* Risk bands — muted, sophisticated, not neon */
-  --risk-high: oklch(0.53 0.17 25);
+  --risk-high: oklch(0.49 0.17 25);
   --risk-high-soft: oklch(0.955 0.03 25);
-  --risk-medium: oklch(0.62 0.12 65);
+  --risk-medium: oklch(0.52 0.12 62);
   --risk-medium-soft: oklch(0.96 0.035 75);
   --risk-watch: oklch(0.52 0.06 245);
   --risk-watch-soft: oklch(0.955 0.018 245);

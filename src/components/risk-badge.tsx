@@ -17,7 +17,7 @@ export function RiskBadge({ band, score, className }: { band: RiskBand; score?: 
     >
       <RiskDot band={band} />
       {BAND_LABEL[band]}
-      {typeof score === "number" && <span className="tnum opacity-70">· {score}</span>}
+      {typeof score === "number" && <span className="tnum">· {score}</span>}
     </span>
   );
 }

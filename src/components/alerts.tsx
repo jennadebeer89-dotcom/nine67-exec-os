@@ -235,7 +235,7 @@ function AlertRow({
           </span>
         </div>
         <p className="mt-0.5 text-sm text-muted-foreground">{a.detail}</p>
-        <p className="mt-1 text-[11px] uppercase tracking-wide text-muted-foreground/70">Triggered by: {a.rule}</p>
+        <p className="mt-1 text-[11px] uppercase tracking-wide text-muted-foreground">Triggered by: {a.rule}</p>
       </div>
       <button
         type="button"
