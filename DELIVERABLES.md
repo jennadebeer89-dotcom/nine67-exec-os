@@ -222,4 +222,5 @@ where margin and clients are lost.
 - The honesty engine: `src/lib/normalize.ts` (turns mess → entities + issues)
 - The deterministic scoring: `src/lib/engine/` (`risk.ts`, `capacity.ts`, `revenue.ts`, `attention.ts`)
 - The grounded AI: `src/lib/ai/context.ts` (what the model is allowed to know) + `prompts.ts`
+- The engine tests: `src/lib/normalize.test.ts` + `src/lib/engine/risk.test.ts` (`pnpm test`)
 - See it all in the terminal: `pnpm engine:check`

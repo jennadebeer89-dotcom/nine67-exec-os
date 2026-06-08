@@ -133,7 +133,7 @@ pnpm build          # production build
 ```
 
 **Stack:** Next.js 16 (App Router) · React 19 · TypeScript · Tailwind v4 · shadcn/ui · OpenAI GPT-4o ·
-Supabase · deployed on Vercel.
+Supabase · Vitest · deployed on Vercel.
 
 ---
 
