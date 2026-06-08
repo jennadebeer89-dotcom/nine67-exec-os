@@ -158,7 +158,9 @@ were built out after the initial version:
   the date shift (renewals tick closer, a client tips into "silent") — exactly as they would in reality.
 - **Automated alerts** (`src/lib/engine/alerts.ts`). Threshold rules across budget, client, capacity,
   revenue, data quality, and week-over-week movement. Each alert names the rule that fired and deep-links
-  to the underlying item. Surfaced on `/alerts`, a nav bell with a count, and a homepage banner.
+  to the underlying item. Surfaced on `/alerts`, a nav bell with a count, and a homepage banner. Alerts
+  can be acknowledged to clear them from the count — they persist locally and resurface until the
+  underlying condition is genuinely resolved (acknowledged ≠ fixed).
 - **Weekly briefing email** (`/digest`). The auto-generated executive briefing email to leadership — AI headline,
   the week in a paragraph, top 3 actions with owners, and a "watch" line on data trust. A real artifact,
   not a mockup; generated on demand from the same engine + AI layer.
@@ -166,7 +168,10 @@ were built out after the initial version:
 ## Measuring success
 
 Because the product is decision-making, not reporting, success is measured by whether leadership *acts
-earlier and better* — and what that protects financially.
+earlier and better* — and what that protects financially. This framing is surfaced in the product
+itself, on the **Impact** page (`/impact`): what problem we're solving, what matters most to leadership,
+and how we measure the return — quantitatively and qualitatively — with every figure derived live from
+the engine.
 
 **Quantitative**
 - Reduction in time leadership spends gathering and reconciling operational information before a decision.
