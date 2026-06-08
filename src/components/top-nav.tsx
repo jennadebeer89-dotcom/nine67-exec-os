@@ -32,6 +32,13 @@ export async function TopNav() {
             <Mail className="h-3.5 w-3.5" />
             Weekly email
           </Link>
+          <Link
+            href="/impact"
+            className="hidden rounded-md px-3 py-1.5 text-muted-foreground transition-colors hover:bg-muted hover:text-foreground sm:block"
+            title="Business case & impact"
+          >
+            Impact
+          </Link>
           <AlertBell count={actionable} />
           <Link
             href="/ask"

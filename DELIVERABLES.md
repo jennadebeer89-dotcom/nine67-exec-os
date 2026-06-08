@@ -1,5 +1,8 @@
 # Deliverables, assumptions & thinking
 
+> **Live demo:** [nine67-exec-os.vercel.app](https://nine67-exec-os.vercel.app) — click through directly, no login. Live GPT-4o + Supabase Postgres.
+> **Run locally:** `pnpm install && pnpm dev` (runs with zero config; see README). **Inspect the engine:** `pnpm engine:check`.
+
 ## The business problem
 
 Leadership teams usually have *more* operational data than they can use, and *less* visibility into what
@@ -121,6 +124,27 @@ leadership where you're *unsure* is the most consultant-like thing the tool does
 
 ---
 
+## Deliberate AI-design choices (and what they signal)
+
+- **Why the AI isn't agentic — yet.** Every AI call here is a single, *grounded* completion over a frozen
+  snapshot, not an autonomous agent loop. That's a deliberate trust decision: an executive won't act on a
+  system whose reasoning changes between runs, and a tool-using agent is only as safe as its weakest live
+  data pull. So the **facts stay deterministic and reproducible** and the AI does judgment and writing on
+  top of them. The agent layer is the natural next step *once the ground truth is trustworthy* — a triage
+  agent that watches the alert stream and opens the change-order task, a retention agent that drafts and
+  schedules renewal outreach, a reconciliation agent that chases the finance-vs-PM spend conflict to
+  ground. The architecture is already shaped for it: the engine's output **is** the tool surface an agent
+  would act on.
+- **Why sample data isn't a shortcut.** The data is modeled as five disagreeing exports (CRM, PM tool,
+  finance tracker, capacity sheet, status notes) and flows through one `normalize()` layer. *That layer —
+  not the UI — is the integration point.* Swapping the in-repo modules for real connectors
+  (HubSpot/Salesforce, Jira/Asana, Xero/QuickBooks, Harvest/Float) feeds the **same** pipeline, so the
+  mess-handling and Data Confidence story hold unchanged against live systems. The Supabase path already
+  proves it: the identical messy rows stored as `text` produce the identical briefing. Single-tenant, no
+  auth — a demo of the thinking, not a production multi-tenant system.
+
+---
+
 ## Trend detection & alerts (added in a second pass)
 
 Two of the brief's "smarter than a dashboard" examples — **trend detection** and **automated alerts** —
@@ -177,8 +201,11 @@ where margin and clients are lost.
 3. **Delivery channels for alerts** — actually push the weekly briefing email and threshold alerts to email/Slack
    on a schedule (the content generation is already built).
 4. **Configurable thresholds & per-client risk policies**, owned by leadership in-app.
-5. **Actions that close the loop.** "Schedule the retention call," "open a change-order task," "flag the
-   invoice" — turning recommendations into one-click actions with assignees.
+5. **Actions that close the loop — and the agent layer.** "Schedule the retention call," "open a
+   change-order task," "flag the invoice" — first as one-click actions with assignees, then as **agents**
+   that watch the alert stream and take the first step autonomously (draft + schedule the outreach, open
+   the task, chase the data conflict), with a human approving rather than authoring. The grounded engine
+   output is the tool surface they'd act on.
 6. **Multi-tenant + auth + Supabase RLS**, scenario modeling ("what if we move 2 designers off Orbit"),
    and confidence intervals on the revenue forecast.
 

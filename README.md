@@ -1,5 +1,9 @@
 # Meridian — Executive Operating System
 
+### ▶ Live demo: **[nine67-exec-os.vercel.app](https://nine67-exec-os.vercel.app)**
+
+*Click through it directly — no login. Running live GPT-4o against a Supabase Postgres backend.*
+
 An AI-powered executive operations tool for a growing agency. It answers one question on open:
 **"What should leadership focus on this week?"** — then lets you click into the *why*, the
 evidence, and what to do about it.
