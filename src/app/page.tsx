@@ -26,29 +26,29 @@ export default async function BriefingPage() {
       <ExecSummary text={summary.text} mode={summary.mode} asOf={state.briefing.asOf} />
 
       {/* Ask the business — prominent, directly under the summary */}
-      <div className="mt-5">
+      <div className="reveal mt-5" style={{ animationDelay: "60ms" }}>
         <AskBar />
       </div>
 
-      <div className="mt-5">
+      <div className="reveal mt-5" style={{ animationDelay: "120ms" }}>
         <StatsRow stats={state.briefing.stats} revenue={state.briefing.revenue} />
       </div>
 
-      <div className="mt-5">
+      <div className="reveal mt-5" style={{ animationDelay: "180ms" }}>
         <AlertsBanner counts={state.alertCounts} />
       </div>
 
-      <div className="mt-5">
+      <div className="reveal mt-5" style={{ animationDelay: "240ms" }}>
         <WhatChangedPanel trends={state.trends} />
       </div>
 
       {/* AI Insights — the AI reading the unstructured signal the numbers miss */}
-      <div className="mt-5">
+      <div className="reveal mt-5" style={{ animationDelay: "300ms" }}>
         <AIInsightsPanel insights={insights.insights} mode={insights.mode} />
       </div>
 
       {/* Primary attention list — top item emphasized */}
-      <section className="mt-9">
+      <section className="reveal mt-9" style={{ animationDelay: "360ms" }}>
         <div className="mb-3 flex items-baseline justify-between">
           <h2 className="font-display text-xl font-medium tracking-tight text-foreground">Needs attention now</h2>
           <span className="text-sm text-muted-foreground">{primary.length} items, ranked by risk</span>

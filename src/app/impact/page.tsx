@@ -80,7 +80,7 @@ export default async function ImpactPage() {
   ];
 
   return (
-    <div className="mx-auto max-w-5xl px-5 py-8">
+    <div className="reveal mx-auto max-w-5xl px-5 py-8">
       <Link
         href="/"
         className="inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"

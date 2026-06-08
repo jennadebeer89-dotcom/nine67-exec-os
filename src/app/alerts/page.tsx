@@ -10,7 +10,7 @@ export default async function AlertsPage() {
   const { alerts, alertCounts: c } = await getExecState();
 
   return (
-    <div className="mx-auto max-w-4xl px-5 py-8">
+    <div className="reveal mx-auto max-w-4xl px-5 py-8">
       <Link href="/" className="inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground">
         <ArrowLeft className="h-3.5 w-3.5" />
         Back to briefing

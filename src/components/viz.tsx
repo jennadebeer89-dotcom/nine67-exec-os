@@ -187,22 +187,36 @@ export function RevenueLinesTable({ lines }: { lines: RevenueLine[] }) {
           </tr>
         </thead>
         <tbody className="divide-y divide-border">
-          {lines.map((l, i) => (
-            <tr key={i} className={l.atRisk ? "bg-risk-high-soft/40" : ""}>
-              <td className="px-3 py-2">
-                <div className="font-medium text-foreground">{l.projectName}</div>
-                <div className="text-xs text-muted-foreground">{l.clientName}</div>
-              </td>
-              <td className="tnum px-3 py-2 text-right font-semibold">{fmtMoney(l.committed, { compact: true })}</td>
-              <td className="px-3 py-2">
-                {l.atRisk ? (
-                  <span className="text-risk-high">{l.riskReason}</span>
-                ) : (
-                  <span className="text-muted-foreground">On track</span>
-                )}
-              </td>
-            </tr>
-          ))}
+          {lines.map((l, i) => {
+            // Cash/AR risk is real but deliberately excluded from the at-risk
+            // recognition total — render it amber + labelled so the table
+            // reconciles to the headline figure rather than appearing to overshoot it.
+            const isCash = l.riskType === "cash";
+            const rowCls = isCash ? "bg-risk-medium-soft/30" : l.atRisk ? "bg-risk-high-soft/40" : "";
+            return (
+              <tr key={i} className={rowCls}>
+                <td className="px-3 py-2">
+                  <div className="font-medium text-foreground">{l.projectName}</div>
+                  <div className="text-xs text-muted-foreground">{l.clientName}</div>
+                </td>
+                <td className="tnum px-3 py-2 text-right font-semibold">{fmtMoney(l.committed, { compact: true })}</td>
+                <td className="px-3 py-2">
+                  {l.atRisk ? (
+                    isCash ? (
+                      <span className="text-risk-medium">
+                        {l.riskReason}{" "}
+                        <span className="text-xs italic text-muted-foreground">(cash/AR — not in at-risk total)</span>
+                      </span>
+                    ) : (
+                      <span className="text-risk-high">{l.riskReason}</span>
+                    )
+                  ) : (
+                    <span className="text-muted-foreground">On track</span>
+                  )}
+                </td>
+              </tr>
+            );
+          })}
         </tbody>
       </table>
     </div>

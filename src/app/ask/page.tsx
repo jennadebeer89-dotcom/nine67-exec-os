@@ -6,7 +6,7 @@ export const metadata = { title: "Ask the business · Meridian Executive OS" };
 
 export default function AskPage() {
   return (
-    <div className="mx-auto max-w-4xl px-5 py-8">
+    <div className="reveal mx-auto max-w-4xl px-5 py-8">
       <Link
         href="/"
         className="inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"

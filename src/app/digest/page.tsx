@@ -30,7 +30,7 @@ export default async function DigestPage() {
   const snapshotDate = fmt(snapshot, true); // e.g. "Friday, June 5, 2026"
 
   return (
-    <div className="mx-auto max-w-3xl px-5 py-8">
+    <div className="reveal mx-auto max-w-3xl px-5 py-8">
       <Link href="/" className="inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground">
         <ArrowLeft className="h-3.5 w-3.5" />
         Back to briefing
@@ -40,7 +40,7 @@ export default async function DigestPage() {
         <div>
           <h1 className="font-display text-3xl font-medium tracking-tight text-foreground">Weekly briefing email</h1>
           <p className="mt-1 text-muted-foreground">
-            Auto-generated and sent to leadership every Monday morning. This is a live preview.
+            Auto-generated for leadership every Monday morning — a live preview of exactly what would land in their inbox.
           </p>
         </div>
         <AIBadge mode={digest.mode} />
@@ -63,7 +63,7 @@ export default async function DigestPage() {
             Monday Briefing — {mondayDate}
           </h2>
           <p className="mt-1 flex flex-wrap items-center gap-x-1.5 gap-y-0.5 text-xs text-muted-foreground">
-            <Clock className="h-3 w-3" /> Sent Monday 7:00am · compiled from data as of {snapshotDate} ·{" "}
+            <Clock className="h-3 w-3" /> Scheduled Monday 7:00am · compiled from data as of {snapshotDate} ·{" "}
             {c.critical} critical / {c.warning} warning alerts
           </p>
         </div>

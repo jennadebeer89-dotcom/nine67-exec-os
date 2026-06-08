@@ -303,8 +303,10 @@ export function normalize(
           detail: `${detail}. Using the worst case ($${max.toLocaleString()}) for risk until reconciled.`,
         });
       } else {
-        spent = spentValues[0];
-        spentWorstCase = spent;
+        // Sources agree within tolerance — take the prudent (highest) figure so
+        // burn is never understated, consistent with the worst-case principle.
+        spent = max;
+        spentWorstCase = max;
       }
     }
 

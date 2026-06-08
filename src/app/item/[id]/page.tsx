@@ -37,7 +37,7 @@ export default async function ItemPage({ params }: { params: Promise<{ id: strin
   ]);
 
   return (
-    <div className="mx-auto max-w-4xl px-5 py-8">
+    <div className="reveal mx-auto max-w-4xl px-5 py-8">
       <Link
         href="/"
         className="inline-flex items-center gap-1.5 text-sm text-muted-foreground transition-colors hover:text-foreground"
@@ -114,8 +114,8 @@ export default async function ItemPage({ params }: { params: Promise<{ id: strin
       <section className="mt-8">
         <h2 className="mb-1 font-display text-xl font-medium tracking-tight text-foreground">The evidence trail</h2>
         <p className="mb-4 text-sm text-muted-foreground">
-          Every factor below is computed deterministically from the source data — the AI explains it, it
-          doesn&apos;t decide it. Weights sum to the {item.score}/100 score.
+          Every factor below is computed deterministically from the source data — the AI explains it; it
+          doesn&apos;t decide it. Weights sum to the {item.score}/100 score shown above.
         </p>
         <div className="grid gap-3 sm:grid-cols-2">
           {item.factors.map((f, i) => (

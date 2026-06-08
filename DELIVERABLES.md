@@ -111,7 +111,7 @@ leadership where you're *unsure* is the most consultant-like thing the tool does
 
 - **How "at risk" should the quarter feel?** An early pass flagged ~78% of committed revenue as at
   risk, which reads as alarmist and erodes trust. We tightened the definition to genuinely exposed
-  lines (~55%, $910k of $1.65M) and made each line state its specific reason. Calibration *is* the
+  lines (~55%, $910k of $1.6M) and made each line state its specific reason. Calibration *is* the
   product here — over-flagging is as damaging as under-flagging.
 - **When two systems disagree, what number do you show?** Showing one and hiding the other is how
   dashboards lie. We chose to show both, flag the conflict, and act on the prudent case — but that

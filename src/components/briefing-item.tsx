@@ -20,7 +20,7 @@ export function CompactBriefingRow({ item, trend }: { item: AttentionItem; trend
   return (
     <Link
       href={`/item/${item.id}`}
-      className="group flex items-center gap-3 rounded-lg border border-border bg-card px-4 py-3 shadow-sm transition-all hover:border-primary/30 hover:shadow-md"
+      className="group flex items-center gap-3 rounded-lg border border-border bg-card px-4 py-3 shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:border-primary/30 hover:shadow-md"
     >
       <RiskDot band={item.band} />
       <div className="min-w-0 flex-1">
@@ -54,7 +54,7 @@ export function BriefingItemCard({
     <Link
       href={`/item/${item.id}`}
       className={cn(
-        "group relative block overflow-hidden rounded-xl border shadow-sm transition-all hover:shadow-md",
+        "group relative block overflow-hidden rounded-xl border shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md",
         featured
           ? cn("border-transparent ring-1", BAND_SOFT[item.band], BAND_RING[item.band], "hover:shadow-lg")
           : "border-border bg-card hover:border-primary/30",

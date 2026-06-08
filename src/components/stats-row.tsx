@@ -6,7 +6,7 @@ import { ShieldCheck } from "lucide-react";
 export function StatsRow({ stats, revenue }: { stats: Briefing["stats"]; revenue: RevenueReport }) {
   const cells = [
     { label: "Clients", value: String(stats.clients), tone: "neutral" },
-    { label: "Active projects", value: String(stats.projects), tone: "neutral" },
+    { label: "Projects", value: String(stats.projects), tone: "neutral" },
     { label: "High-risk items", value: String(stats.highRisk), tone: stats.highRisk > 0 ? "bad" : "ok" },
     { label: "Over-allocated", value: String(stats.overAllocatedPeople), tone: stats.overAllocatedPeople > 0 ? "warn" : "ok" },
     { label: "Data gaps", value: String(stats.dataIssues), tone: "warn" },
@@ -26,7 +26,7 @@ export function StatsRow({ stats, revenue }: { stats: Briefing["stats"]; revenue
         <div className="flex items-center gap-1.5">
           <ShieldCheck className="h-3.5 w-3.5 text-primary" />
           <span className="text-[11px] font-semibold uppercase tracking-wide text-accent-foreground">
-            Revenue Protected Opportunity
+            Revenue at Risk — Protectable
           </span>
         </div>
         <div className="tnum mt-2 font-display text-4xl font-semibold leading-none text-foreground">
