@@ -4,12 +4,15 @@ import type { Briefing, RevenueReport } from "@/lib/engine/types";
 import { ShieldCheck } from "lucide-react";
 
 export function StatsRow({ stats, revenue }: { stats: Briefing["stats"]; revenue: RevenueReport }) {
+  // Signals first (what needs attention), portfolio scope last (neutral context),
+  // so the totals read as "the book is 12 clients / 15 projects" — not as
+  // "12 clients and 15 projects are in trouble."
   const cells = [
-    { label: "Clients", value: String(stats.clients), tone: "neutral" },
-    { label: "Projects", value: String(stats.projects), tone: "neutral" },
     { label: "High-risk items", value: String(stats.highRisk), tone: stats.highRisk > 0 ? "bad" : "ok" },
-    { label: "Over-allocated", value: String(stats.overAllocatedPeople), tone: stats.overAllocatedPeople > 0 ? "warn" : "ok" },
+    { label: "Over-allocated people", value: String(stats.overAllocatedPeople), tone: stats.overAllocatedPeople > 0 ? "warn" : "ok" },
     { label: "Data gaps", value: String(stats.dataIssues), tone: "warn" },
+    { label: "Clients (total)", value: String(stats.clients), tone: "neutral" },
+    { label: "Projects (total)", value: String(stats.projects), tone: "neutral" },
   ] as const;
 
   const tone: Record<string, string> = {

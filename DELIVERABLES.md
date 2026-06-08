@@ -46,7 +46,8 @@ and procurement is benchmarking two competitors — here's the actual note."*
 So the system is split into **three layers**, and the boundary between them is the whole design:
 
 - **A deterministic engine** computes every number — risk scores, capacity utilization, revenue-at-risk,
-  data-quality flags. Pure TypeScript, inspectable (`pnpm engine:check`), identical every run. Each risk
+  data-quality flags. Pure TypeScript, inspectable (`pnpm engine:check`), **unit-tested** (`pnpm test` —
+  scores, factors, the messy-data parsers, conflict worst-case, revenue-at-risk), identical every run. Each risk
   score is a sum of weighted **factors**, and each factor carries its own **evidence** (the metric, the
   budget source, or the literal status note behind it). Numbers are never left to a model.
 - **An AI judgment layer** does the thing a dashboard fundamentally cannot: it *reads the unstructured

@@ -127,6 +127,7 @@ Useful commands:
 
 ```bash
 pnpm engine:check   # see the ranked briefing, revenue, capacity, and data issues in the terminal
+pnpm test           # unit tests for the deterministic engine (risk, revenue, capacity, parsers)
 pnpm typecheck      # tsc --noEmit
 pnpm build          # production build
 ```
